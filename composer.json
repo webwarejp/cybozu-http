@@ -1,11 +1,15 @@
 {
-  "name": "ochi51/cybozu-http",
+  "name": "webwarejp/cybozu-http",
   "type": "library",
   "description": "A PHP HTTP client library for cybozu.com API (kintone API and User API)",
   "authors": [
     {
       "name": "Yuichi Ochiai",
       "email": "ochiai@cstap.com"
+    },
+    {
+      "name": "Omori Yusuke",
+      "email": "omori@webware.co.jp"
     }
   ],
   "require": {
