@@ -311,17 +311,29 @@ class PreviewApp
      * Put preview app settings
      * https://cybozudev.zendesk.com/hc/ja/articles/204730520
      *
-     * @param integer $id
+     *     * @param integer $id
      * @param string  $name
      * @param string  $description
-     * @param array   $icon
+     * @param mixed   $icon
      * @param string  $theme
      * @param integer $guestSpaceId
      * @param integer $revision
+     * @throws \InvalidArgumentException
      * @return array
      */
-    public function putSettings($id, $name, $description, array $icon, $theme, $guestSpaceId = null, $revision = -1)
+    public function putSettings($id, $name, $description, $icon, $theme, $guestSpaceId = null, $revision = -1)
     {
+        if (!($icon instanceof \stdClass)) {
+            if (is_array($icon)) {
+                $icon = (object) $icon;
+            } else {
+                $message = sprintf('Type error: Argument 4 passed to %s() must be of the type array or instanceof \stdClass, %s given.',
+                    __METHOD__,
+                    gettype($icon));
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
         $options = ['json' => [
             'app' => $id,
             'name' => $name,
@@ -344,13 +356,24 @@ class PreviewApp
      * https://cybozudev.zendesk.com/hc/ja/articles/204529724#anchor_changeform_addfields
      *
      * @param integer $id
-     * @param array   $fields
+     * @param mixed   $fields
      * @param integer $guestSpaceId
      * @param integer $revision
      * @return array
      */
-    public function postFields($id, array $fields, $guestSpaceId = null, $revision = -1)
+    public function postFields($id, $fields, $guestSpaceId = null, $revision = -1)
     {
+        if (!($fields instanceof \stdClass)) {
+            if (is_array($fields)) {
+                $fields = (object) $fields;
+            } else {
+                $message = sprintf('Type error: Argument 2 passed to %s() must be of the type array or instanceof \stdClass, %s given.',
+                    __METHOD__,
+                    gettype($fields));
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
         $options = ['json' => [
             'app' => $id,
             'properties' => $fields,
@@ -448,13 +471,24 @@ class PreviewApp
      * https://cybozudev.zendesk.com/hc/ja/articles/204529794
      *
      * @param integer $id
-     * @param array   $views
+     * @param mixed   $views
      * @param integer $guestSpaceId
      * @param integer $revision
      * @return array
      */
-    public function putViews($id, array $views, $guestSpaceId = null, $revision = -1)
+    public function putViews($id, $views, $guestSpaceId = null, $revision = -1)
     {
+        if (!($views instanceof \stdClass)) {
+            if (is_array($views)) {
+                $views = (object) $views;
+            } else {
+                $message = sprintf('Type error: Argument 2 passed to %s() must be of the type array or instanceof \stdClass, %s given.',
+                    __METHOD__,
+                    gettype($views));
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
         $options = ['json' => [
             'app' => $id,
             'views' => $views,
@@ -577,14 +611,25 @@ class PreviewApp
      * https://cybozudev.zendesk.com/hc/ja/articles/217905503
      *
      * @param integer $id
-     * @param array   $states
-     * @param array   $actions
+     * @param mixed   $states
+     * @param mixed   $actions
      * @param boolean $enable
      * @param integer $guestSpaceId
      * @return array
      */
-    public function putStatus($id, array $states, array $actions, $enable = true, $guestSpaceId = null)
+    public function putStatus($id, $states = null, array $actions = null, $enable = true, $guestSpaceId = null)
     {
+        if (!is_null($states) && !($states instanceof \stdClass)) {
+            if (is_array($states)) {
+                $states = (object) $states;
+            } else {
+                $message = sprintf('Type error: Argument 2 passed to %s() must be of the type null orarray or instanceof \stdClass , %s given.',
+                    __METHOD__,
+                    gettype($states));
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
         $options = [
             'json' => [
                 'app' => $id,
