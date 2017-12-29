@@ -617,7 +617,7 @@ class PreviewApp
      * @param integer $guestSpaceId
      * @return array
      */
-    public function putStatus($id, $states = null, array $actions = null, $enable = true, $guestSpaceId = null)
+    public function putStatus($id, $states = null, array $actions = null, $enable = true, $guestSpaceId = null, $revision = -1)
     {
         if (!is_null($states) && !($states instanceof \stdClass)) {
             if (is_array($states)) {
@@ -635,7 +635,8 @@ class PreviewApp
                 'app' => $id,
                 'enable' => $enable,
                 'states' => $states,
-                'actions' => $actions
+                'actions' => $actions,
+                'revision' => $revision
             ]
         ];
 
