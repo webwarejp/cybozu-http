@@ -79,7 +79,7 @@ class App
             ->get(KintoneApi::generateUrl('form.json', $guestSpaceId), $options)
             ->getBody();
 
-        return $stream->jsonSerialize()['properties'];
+        return $stream->jsonSerialize();
     }
 
     /**
