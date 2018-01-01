@@ -398,8 +398,19 @@ class PreviewApp
      * @param integer $revision
      * @return array
      */
-    public function putFields($id, array $fields, $guestSpaceId = null, $revision = -1)
+    public function putFields($id, $fields, $guestSpaceId = null, $revision = -1)
     {
+        if (!($fields instanceof \stdClass)) {
+            if (is_array($fields)) {
+                $fields = (object) $fields;
+            } else {
+                $message = sprintf('Type error: Argument 2 passed to %s() must be of the type array or instanceof \stdClass, %s given.',
+                    __METHOD__,
+                    gettype($fields));
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
         $options = ['json' => [
             'app' => $id,
             'properties' => $fields,
